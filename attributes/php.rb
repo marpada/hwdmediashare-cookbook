@@ -1,0 +1,11 @@
+default['hwdmediashare']['php']['fpm_socket'] = '/usr/lib/apache2/fastcgi/fpm-hwdmediashare.sock'
+default['hwdmediashare']['php']['process_manager'] = 'ondemand'
+default['hwdmediashare']['php']['max_children'] = '5'
+default['hwdmediashare']['php']['mim_spare_servers'] = '2'
+default['hwdmediashare']['php']['max_spare_servers'] = '5'
+default['hwdmediashare']['php']['options'] = {}
+default['hwdmediashare']['php']['options']['upload_max_filesize'] = node['hwdmediashare']['max_upload_size'] || "2048M"
+default['hwdmediashare']['php']['options']['post_max_size'] = node['hwdmediashare']['max_upload_size'] || "2048M"
+default['hwdmediashare']['php']['options']['max_execution_time'] = '0'
+default['hwdmediashare']['php']['options']['display_errors'] = '1'
+default['hwdmediashare']['php']['options']['output_buffering'] = '0'

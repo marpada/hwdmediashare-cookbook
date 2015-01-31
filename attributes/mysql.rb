@@ -1,0 +1,6 @@
+default['mysql']['server_root_password'] = 'changeme'
+default['mysql']['server_debian_password'] = 'changeme'
+default['mysql']['server_replication_password'] = 'changeme'
+default['hwdmediashare']['mysql']['joomla_db_name'] = 'joomla'
+default['hwdmediashare']['mysql']['joomla_db_user'] = 'joomla'
+default['hwdmediashare']['mysql']['joomla_db_password'] = 'PleseDoChangeMe'

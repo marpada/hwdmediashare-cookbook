@@ -1,0 +1,39 @@
+ServerName <%= @params[:server_name] %>
+DocumentRoot <%= @params[:docroot] %>
+RewriteEngine On
+
+<Directory <%= @params[:docroot] %>>
+Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
+AllowOverride <%= [@params[:allow_override] || "All" ].flatten.join " " %>
+  <% if node['apache']['version'] == '2.4' -%>
+    Require all granted
+  <% else -%>
+    Order allow,deny
+    Allow from all
+   <% end %>
+</Directory>
+
+<% if node['apache']['version'] == '2.4' -%>
+<Directory /usr/lib/cgi-bin/>
+  Require all granted
+</Directory>
+<% end -%>
+<% if @params[:cgi_enabled] %>
+<IfModule mod_suexec.c>
+SuexecUserGroup "<%= @params[:user] %>" "<%= @params[:group]%>"
+</IfModule>
+
+ScriptAlias  "/cgi-bin/" "/var/www/vhosts/<%= @params[:name] %>/cgi-bin/"
+<% end %>
+<Directory />
+Options FollowSymLinks
+AllowOverride None
+</Directory>
+
+LogLevel warn
+ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+
+<% if @params[:directory_index] -%>
+DirectoryIndex <%= [@params[:directory_index]].flatten.join " " %>
+<% end -%>

@@ -30,6 +30,8 @@ end
 
 
 php_fpm_pool "hwdmediashare" do
+    user node['hwdmediashare']['user']
+    group node['hwdmediashare']['group']
     process_manager node['hwdmediashare']['php']['process_manager']
     listen  node['hwdmediashare']['php']['fpm_socket']
     max_children  node['hwdmediashare']['php']['max_children']

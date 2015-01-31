@@ -6,6 +6,7 @@ include_recipe 'apache2::mod_fastcgi'
 include_recipe 'apache2::mod_expires'
 include_recipe 'apache2::mod_headers'
 include_recipe 'apache2::mod_rewrite'
+include_recipe 'apache2::mod_cgi'
 
 package 'apache2-dev'
 

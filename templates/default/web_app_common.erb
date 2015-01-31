@@ -1,6 +1,7 @@
 ServerName <%= @params[:server_name] %>
 DocumentRoot <%= @params[:docroot] %>
 RewriteEngine On
+SuexecUserGroup <%= node['hwdmediashare']['user'] %> <%= node['hwdmediashare']['group'] %> 
 
 <Directory <%= @params[:docroot] %>>
 Options <%= [@params[:directory_options] || "FollowSymLinks" ].flatten.join " " %>
@@ -12,6 +13,21 @@ AllowOverride <%= [@params[:allow_override] || "All" ].flatten.join " " %>
     Allow from all
    <% end %>
 </Directory>
+
+
+ScriptAlias /cgi-bin/ <%= @params[:docroot] %>/cgi-bin/
+<Directory <%= @params[:docroot] %>/cgi-bin >
+Options +ExecCGI
+AddHandler cgi-script .pl
+AllowOverride <%= [@params[:allow_override] || "All" ].flatten.join " " %>
+<% if node['apache']['version'] == '2.4' -%>
+Require all granted
+<% else -%>
+Order allow,deny
+Allow from all
+<% end %>
+</Directory>
+
 
 <% if node['apache']['version'] == '2.4' -%>
 <Directory /usr/lib/cgi-bin/>

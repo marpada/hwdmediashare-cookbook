@@ -13,3 +13,9 @@ end
     to "/opt/mct/bin/#{binary}"
   end
 end
+
+%w{yamdi}.each do |binary|
+  link "/usr/bin/#{binary}" do
+    to "/opt/mct/bin/#{binary}"
+  end
+end

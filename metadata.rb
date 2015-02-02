@@ -11,8 +11,7 @@ depends 'git'
 depends 'curl'
 depends 'apache2'
 depends 'database'
-depends 'mysql', "~> 4.1.2"
-depends 'database'
+depends 'mysql', '~> 6.0.12'
+depends 'database', '~> 3.1.0'
 depends 'php'
 depends 'php-fpm'
-depends 'mysql2_chef_gem', "< 1.0.0"

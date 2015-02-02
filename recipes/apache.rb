@@ -17,9 +17,9 @@ apache_module "suexec" do
   conf false
 end
 directory node['hwdmediashare']['docroot'] do
-  owner 'www-data'
-  group 'www-data'
-  mode '0755'
+  owner node['hwdmediashare']['user']
+  group node['hwdmediashare']['group']
+  mode '0775'
 end
 
 

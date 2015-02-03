@@ -1,3 +1,9 @@
+group node['hwdmediashare']['group']
+
+user node['hwdmediashare']['user'] do
+  gid node['hwdmediashare']['group']
+end
+
 joomla_package = node['hwdmediashare']['joomla_package_url'].gsub(/^(.*\/)/,'')
 remote_file "#{Chef::Config[:file_cache_path]}/#{joomla_package}" do
     source node['hwdmediashare']['joomla_package_url']

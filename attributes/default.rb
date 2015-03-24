@@ -1,4 +1,4 @@
-default['hwdmediashare']['joomla_package_url'] = "http://joomlacode.org/gf/download/frsrelease/19822/161255/Joomla_3.3.6-Stable-Full_Package.tar.gz"
+default['hwdmediashare']['joomla_package_url'] = "http://joomlacode.org/gf/download/frsrelease/20021/162256/Joomla_3.4.1-Stable-Full_Package.tar.gz"
 default['hwdmediashare']['hostname'] = node['hostname']
 default['hwdmediashare']['docroot'] ='/var/www/hwdmediashare'
 default['hwdmediashare']['user'] = 'vagrant'

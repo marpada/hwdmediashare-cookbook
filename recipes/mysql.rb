@@ -1,42 +1,12 @@
-node.set['build_essential']['compiletime'] = true
-include_recipe "build-essential"
-
-mysql_service 'default' do
-    version '5.6'
-    bind_address '0.0.0.0'
-    port '3306'
-    socket '/var/run/mysqld/mysqld.sock'
-    initial_root_password node['mysql']['server_root_password']
-    action [:create, :start]
-end
-
-mysql_client 'default' do
-    action :create
-end
-
-template '/root/.my.cnf' do
-  owner 'root'
-  group 'root'
-  mode '0600'
-  source 'my.cnf.erb'
-end
+include_recipe 'mysql::server'
 
 # Joomla DB and user
- mysql_connection_info = {
-   :host     => '127.0.0.1',
-   :username => 'root',
-   :password => node['mysql']['server_root_password']
-  }
-
-mysql_database node['hwdmediashare']['mysql']['joomla_db_name'] do
-    connection mysql_connection_info
-    action :create
+execute "Create hwdmediashare DB" do
+    command "mysql -e \'CREATE DATABASE #{node['hwdmediashare']['mysql']['joomla_db_name']}\' -uroot -p#{node['mysql']['server_root_password']}"
+    not_if "mysql -e \'SHOW DATABASES\' -uroot -p#{node['mysql']['server_root_password']}  | grep -q #{node['hwdmediashare']['mysql']['joomla_db_name']}"
 end
 
-mysql_database_user node['hwdmediashare']['mysql']['joomla_db_user'] do
-    connection mysql_connection_info
-    database_name node['hwdmediashare']['mysql']['joomla_db_name'] 
-    password node['hwdmediashare']['mysql']['joomla_db_password'] 
-    privileges [:all]
-    action :grant
+
+execute "Create hwdmediashare User" do
+    command %Q{mysql -e 'GRANT ALL ON #{node['hwdmediashare']['mysql']['joomla_db_name']}.* TO '#{node['hwdmediashare']['mysql']['joomla_db_user']}'@'localhost' IDENTIFIED BY "#{node['hwdmediashare']['mysql']['joomla_db_password']}" '  -uroot -p#{node['mysql']['server_root_password']}}
 end
